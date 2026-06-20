@@ -1,45 +1,54 @@
 import React, { useState } from 'react'
-import Salutation from './components/Salutation'
 import Card from './components/Card'
-
-
-const produits = [
-  {id:1, nom: 'T-shirt', prix: 25000, dispo: true},
-  {id:2, nom: 'Jean', prix: 125000, dispo: false},
-  {id:3, nom: 'Basket', prix: 14500, dispo: true},
-  {id:4, nom: 'String', prix: 2000, dispo: false}
-]
-
-
+// import avatar11 from './assets/avatar11.png'
+// import avatar12 from './assets/avatar12.png'
+// import avatar13 from './assets/avatar13.png'
 
 function App() {
+  const [state, functionState] = useState([
+    {id: 1, name: 'Ronaldo'},
+    {id: 2, name: 'Ronaldihno'},
+    {id: 3, name: 'Messi'}
+  ])
 
-  const [step, setStep] = useState(-1)
+  const [name, setName] = useState('')
 
-  const handleStep = ()=>{
-    if (step <= produits.length -1) {   
-      setStep(step+1)
-    }
+  const handleChange = (e)=>{
+    console.log(e.target.value);
+    setName(e.target.value)
   }
 
-
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+  }
 
   return (
-    <div className='w-screen h-screen flex justify-center items-center gap-5'>
-      <button onClick={handleStep} className='px-4 py-2 bg-blue-500 text-white cursor-pointer rounded transition-all hover:scale-95'>Precedent</button>
-      {
-        produits.map((prod, index)=>(
-          <div key={prod.id} className={`w-50 h-50 p-5 border-2 flex flex-col gap-4 ${index <= step ? 'bg-amber-300 text-black': 'bg-blue-500 text-white scale-50'}`}>
-            <h1>{prod.nom}</h1>
-            <p>{prod.prix.toLocaleString()}</p>
-            <span className={`${prod.dispo ? 'text-green-500':'text-red-500'}`}>{prod.dispo ? 'Disponible' : 'Epuise'}</span>
-          </div>
-        ))
-      }
-      <button onClick={handleStep} className='px-4 py-2 bg-blue-500 text-white cursor-pointer rounded transition-all hover:scale-95'>Suivant</button>
-      
+    <main className='w-screen h-screen flex flex-col gap-5 justify-center items-center'>
+      <form action="submit" onSubmit={handleSubmit}>
+        <input 
+         type="text" 
+         value={name}
+         onChange={handleChange}
+         placeholder='Entrer un footbaleur' 
+         className='border-2 px-4 py-2 rounded border-green-300'
+         />
+        <button
+          className='px-4 py-2 bg-blue-500 text-white ml-5 rounded transition-all cursor-pointer hover:scale-95'>Enregistrer</button>
+      </form>
 
+      <div className='w-200 flex flex-col justify-center items-center p-8  bg-green-200'>
+        <h1 className='font-bold text-2xl'>Vos grands joueurs</h1>
+      <ul>{state.map( (e)=>(
+        <li className='mt-5' key={e.id}>{e.name}</li>
+      ))}</ul>
+
+
+      {/* <Card name={'Bertrand'} metier={'Pousseur'} experience={4} logo={avatar11}/>
+      <Card name={'Bertrand'} metier={'Pousseur'} experience={4} logo={avatar12}/>
+      <Card name={'Bertrand'} metier={'Pousseur'} experience={4} logo={avatar13}/> */}
     </div>
+    </main>
+    
   )
 }
 

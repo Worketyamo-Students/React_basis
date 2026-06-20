@@ -1,8 +1,9 @@
 import React from 'react'
 
-export default function Card({name, metier, experience}) {
+export default function Card({name, metier, experience, logo}) {
   return (
     <div>
+        <img src={logo} alt={name} width={50} height={50}/>
         <h1>Nom : {name}</h1>
         <p>Metier : {metier}</p>
         <p>Experience : {experience} ans d'experience</p>
