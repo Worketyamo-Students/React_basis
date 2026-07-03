@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
 import Home from './Home.jsx'
+import Pokemon from './Pokemon.jsx'
+import Detail from './Detail.jsx'
 
 
  
@@ -17,6 +19,14 @@ const routes = createBrowserRouter([
   {
     path: '/joueurs',
     element: <App/>
+  },
+  {
+    path: '/pokemon',
+    element: <Pokemon/>
+  },
+  {
+    path: '/detail/:nom',
+    element: <Detail/>
   }
 ])
 
