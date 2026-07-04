@@ -20,7 +20,6 @@ const navigate = useNavigate()
 
 
 
-
       {/* <Link to={'/joueurs'}>Allez vesr les jouers</Link> */}
 
     </div>

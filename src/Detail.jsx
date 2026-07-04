@@ -2,6 +2,9 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
+import { RingLoader } from 'react-spinners'
+
+
 
 function Detail() {
     const {nom} = useParams()
@@ -28,7 +31,17 @@ function Detail() {
         fetchDetail()
     }, [nom])
 
-    if (chargement) return <p>Chargement de {nom} ...</p>
+    if (chargement){
+        return(
+            <div className='w-full min-h-screen bg-green-100 flex flex-col gap-4 items-center justify-center'>
+                <RingLoader color='#047857' size={80} speedMultiplier={1}></RingLoader>
+                <p className='text-shadow-emerald-800 font-semibold text-2xl animate-pulse'>
+                    Chargement des pokemons en cours...
+                </p>
+            </div>
+        )
+    } 
+
 
   return (
     <>

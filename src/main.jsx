@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom/client'
 import Home from './Home.jsx'
 import Pokemon from './Pokemon.jsx'
 import Detail from './Detail.jsx'
+import AppContext from './AppContext.jsx'
+import { UserProvider } from './UserContext.jsx'
 
 
  
@@ -14,7 +16,7 @@ import App from './App.jsx'
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <Home/>
+    element: <AppContext/>
   },
   {
     path: '/joueurs',
@@ -32,7 +34,7 @@ const routes = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={routes}></RouterProvider>
-  </StrictMode>,
+    <UserProvider>
+      <RouterProvider router={routes}></RouterProvider>
+    </UserProvider>
 )
