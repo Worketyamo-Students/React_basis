@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
+import { Loader2 } from 'lucide-react'
+
 
 function Login() {
     const navigate = useNavigate()
@@ -10,6 +12,7 @@ function Login() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
 
     const handleEmail = (e)=>{
@@ -28,26 +31,39 @@ function Login() {
         e.preventDefault()
         setError('')
         setSuccess('')
+        setIsLoading(true)
 
         try {
             const res = await axios.post('http://localhost:3000/api/auth/login', dataPost)
+            console.log(res.data);
+            
             
             const token = res.data.token
+            const refreshToken = res.data.refreshToken
              if (token) {
                 localStorage.setItem('Token', token)
-             }            
+                localStorage.setItem('RefreshToken', refreshToken)
+             }     
+             
+            const userRole = res.data.user.role
        
             setSuccess('Compte creer avec success ! preparation de la connexion')
 
             setTimeout(()=>{
-                navigate('/blogs')
-            }, 2000)
+                if (userRole === "ADMIN") {
+                    navigate('/dashboard')
+                } else{
+                    navigate('/blogs')
+                }
+                
+            }, 1000)
 
         } catch (error) {
             setError(error.response?.data?.message || 'Une erreur est survenue') 
         } finally{
             setEmail('')
             setPassword('')
+            setIsLoading(false)
         }
 
     }
@@ -74,8 +90,16 @@ function Login() {
 
             <div>
                 <button
-                className='px-4 py-2 text-white rounded bg-blue-400 cursor-pointer hover:scale-95'
-                >Connexion</button>
+                className={`px-4 py-2 text-white rounded bg-blue-400 flex items-center gap-2 cursor-pointer hover:scale-95`}
+                disabled={isLoading}
+                >{isLoading ? (
+                    <>
+                        <Loader2 className='w-5 h-5 animate-spin'/>
+                        <span>Connexion en cours...</span>
+                    </>
+                ):('Connexion')
+                
+                }</button>
             </div>
 
             <div>

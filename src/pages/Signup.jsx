@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { Loader2 } from 'lucide-react'
 
 function Signup() {
     const navigate = useNavigate()
@@ -9,6 +10,7 @@ function Signup() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
 
     const handleName = (e)=>{
@@ -31,6 +33,7 @@ function Signup() {
         e.preventDefault()
         setError('')
         setSuccess('')
+        setIsLoading(true)
 
         try {
             const res = await axios.post('http://localhost:3000/api/auth/signup', dataPost)
@@ -48,6 +51,7 @@ function Signup() {
             setName('')
             setEmail('')
             setPassword('')
+            setIsLoading(false)
         }
 
     }
@@ -63,26 +67,36 @@ function Signup() {
         <form action="" onSubmit={handleSubmit}  className='w-[40%] p-5 bg-green-100 flex gap-5 flex-col items-center' >
 
             <div>
-                <label htmlFor="password">Name : </label>
-                <input type="text" id='password' className='border-2 p-1 rounded' name={name} onChange={handleName}/>
+                <label htmlFor="name">Name : </label>
+                <input type="text" id='name' className='border-2 p-1 rounded' value={name} onChange={handleName}/>
             </div>
         
             <div>
                 <label htmlFor="email">Email : </label>
-                <input type="email" id='email' className='border-2 p-1 rounded' name={email} onChange={handleEmail}/>
+                <input type="email" id='email' className='border-2 p-1 rounded' value={email} onChange={handleEmail}/>
             </div>
 
             <div>
                 <label htmlFor="password">Password : </label>
-                <input type="password" id='password'  className='border-2 p-1 rounded' name={password} onChange={handlePassword}/>
+                <input type="password" id='password'  className='border-2 p-1 rounded' value={password} onChange={handlePassword}/>
             </div>
 
         
 
             <div>
                 <button
-                className='px-4 py-2 text-white rounded bg-blue-400 cursor-pointer hover:scale-95'
-                >Creer un compte</button>
+                    className={`px-4 py-2 text-white rounded bg-blue-400 flex items-center gap-2 cursor-pointer hover:scale-95`}
+                    disabled={isLoading}
+                >{isLoading ? (
+                    <>
+                        <Loader2 className='w-5 h-5 animate-spin'/>
+                        <span>Creation du compte en cours...</span>
+                    </>
+                ):('Creer un compte')
+
+                }
+                   
+                </button>
             </div>
 
        

@@ -1,6 +1,8 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Button } from "@/components/ui/button"
+import { CardDemo } from './AdminLongin'
+import { HoverCardDemo } from '@/composants/Btn_over'
 
 function Home() {
 const navigate = useNavigate()
@@ -18,6 +20,11 @@ const navigate = useNavigate()
       onClick={()=>navigate('/login')}
       >se Connecter</button>
     </div>
+    <CardDemo/>
+    <HoverCardDemo/>
+
+
+    <Button variant='destructive'>Button</Button>
 
 
 
