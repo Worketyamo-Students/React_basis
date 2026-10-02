@@ -7,6 +7,9 @@ import Signup from './pages/Signup.jsx'
 import Login from './pages/Login.jsx'
 import Blogs from './pages/Blogs.jsx'
 import Dashboard from './pages/Dashboard.jsx'
+import AppNav from './AppNav.jsx'
+import Hooks from './Hooks.jsx'
+
 
 
  
@@ -16,7 +19,12 @@ import App from './App.jsx'
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <Home/>
+    element: <Hooks/>
+  },
+  {
+    path: '/joueurs',
+    element: <App/>
+    // element: <Home/>
   },
   {
     path: '/login',
@@ -34,6 +42,10 @@ const routes = createBrowserRouter([
     path: '/dashboard',
     element: <Dashboard/>
   },
+  {
+    path: '/correction',
+    element: <AppNav/>
+  }
 
 ])
 

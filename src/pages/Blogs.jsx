@@ -21,36 +21,40 @@ function Blogs() {
          console.log(res.data);
         
       } catch (error) {
-        if (error.response?.status === 401) {
-          console.log('Token expire, veuillez vous reconnecter !!');
-
+        console.log(error);
+        console.log(error.response)
+        console.log(error.response?.data)
+        console.log(error.response?.status)
+              
+        if(error.response?.status === 401){
           try {
-            const refreshToken = localStorage.getItem('RefreshToken')
-            const resRefresh = await axios.post(`http://localhost:3000/api/auth/refresh`, {refreshToken})
-            console.log(resRefresh.data.accesToken);
-
-            const newToken = resRefresh.data.accesToken
-            localStorage.setItem('Token', newToken)
-
-            const Retryres = await axios.get('http://localhost:3000/api/blog', {
-              headers: {Authorization: `Bearer ${newToken}`}
+            // localStorage.removeItem("Token")
+            const RefreshToken = localStorage.getItem("RefreshToken")
+            console.log(RefreshToken)
+            const token = await axios.post("http://localhost:3000/api/auth/refresh", {
+              refreshToken: RefreshToken
             })
-            //setBlog
-            console.log(Retryres.data);
-               
+            console.log(token)
+            localStorage.setItem("Token", token.data.accesToken)
+            const newToken = token.data.accesToken
+            const res = await axios.get('https://blog-backend-3nrb.onrender.com/api/blog', {
+              headers: {Authorization: `Bearer ${newToken}`}
+           })
+           console.log(res.data);
+           
+          } catch (error) {
+            console.log(error);
+            console.log(error.response)
+            console.log(error.response?.data)
+            console.log(error.response?.status)
+
             
-          } catch (errorRefresh) {
-            console.log('Refresh token expire, reconnexion obligatoire');
-            localStorage.removeItem('Token')
-            localStorage.removeItem('RefreshToken')
-            navigate('/login')
+              localStorage.removeItem("RefreshToken")
+              localStorage.removeItem("Token")
+              navigate("/")
             
           }
-
-
         }
-
-              
       }
     }
 

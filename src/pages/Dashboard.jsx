@@ -6,22 +6,24 @@ import { useNavigate } from 'react-router-dom'
 function Dashboard() {
   const navigate = useNavigate()
 
-  const handleLogout = async ()=>{
+  const handleLogout = async () => {
     try {
-      const refreshToken = localStorage.getItem('RefreshToken')
-      await axios.post('http://localhost:3000/api/auth/logout', {refreshToken})
-
+      const refreshToken = localStorage.getItem("RefreshToken")
+      const res = await axios.post("http://localhost:3000/api/auth/logout",{
+        refreshToken
+      })
+      console.log(res.data)
     } catch (error) {
       console.log(error);
-    }
-    finally{
-      localStorage.removeItem('RefreshToken')
-      localStorage.removeItem('Token')
-      navigate('/')
+      console.log(error.response)
+      console.log(error.response?.data)
+      console.log(error.response?.status)
+    } finally {
+      localStorage.removeItem("Token")
+      localStorage.removeItem("RefreshToken")
+      navigate("/")
     }
   }
-  
-
 
   return (
     <div>
